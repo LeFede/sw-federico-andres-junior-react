@@ -1,0 +1,81 @@
+@use '../../scss/vars' as *;
+
+.menu-left {
+  .selected {
+    color: $color-1;
+    border-bottom: $color-1 2px solid;
+  }
+}
+
+.cart {
+  .svg {
+    &:nth-child(2) img {width: 20%; transform: translate(140%, 170%);}
+    &:nth-child(3) img {width: 20%; transform: translate(-40%, 170%);}
+  }
+
+  .circle {
+    background-color: $color-2;
+    transform: translate(60%, -30%);
+    color: $color-4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.dropdown {
+  visibility: hidden;
+  &:hover {visibility: visible;}
+  menu {
+    div:hover {background-color: $color-4;}
+    
+  }
+  
+}
+
+.currency {
+  .arrow {
+    transform: rotate(180deg);
+    transition: transform .6s ease;
+  }
+  .arrow.rotate {transform: rotate(0deg);}
+  &:hover {
+    & ~ .dropdown {visibility: visible;}
+    
+  }
+  
+}
+
+.section {
+  flex: 1 1 100%;
+  width: 33%;
+  & > * {
+    flex: 1;
+  }
+  & img {
+    object-fit: cover;
+  }
+}
+
+.cart-list {
+  width: 20em;
+  .center {
+    justify-content: space-between;
+    align-items: center;
+    & > * {flex: initial;}
+  }
+}
+
+.cart {
+  &:hover ~ .cart-list-outer {
+    visibility: visible;
+  }
+}
+
+.cart-list-outer {
+  visibility: hidden;
+  width: 100%;
+  &:hover {
+    visibility: visible;
+  }
+}

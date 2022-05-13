@@ -1,0 +1,32 @@
+@use './vars' as *;
+
+:root {font-size: 16px; color: $color-2;}
+html {overflow-y: overlay;}
+img {width: 100%; display: block;}
+small {font-size: 14px;}
+
+a {
+  text-decoration: none;
+  &:visited {color: inherit;}
+}
+
+@for $i from 1 through 6 {
+  h#{$i} {font-size: 2.6em - $i * .2em;}
+}
+
+*, *::after, *::before {
+  position: relative;
+  box-sizing: border-box;
+}
+
+::-webkit-scrollbar {width: 1em;}
+::-webkit-scrollbar-track {background: transparent;}
+::-webkit-scrollbar-thumb {border: $size-1 * .10 solid black;background: $color-1-40; border-radius: $size-1;}
+::-webkit-scrollbar-thumb:hover {background: $color-1-60;}
+
+
+// ::-webkit-resizer {width: 30px; height: 30px;background-color: transparent;}
+// ::-webkit-scrollbar-corner {width: 30px; height: 30px;background-color: red}
+// ::-webkit-scrollbar-track-piece {width: 30px; height: 30px; background-color: transparent;}
+// ::-webkit-scrollbar-button {width: 30px; height: 30px; background-color: transparent;}
+
