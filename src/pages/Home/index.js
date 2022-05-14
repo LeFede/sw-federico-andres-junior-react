@@ -1,33 +1,62 @@
 import React, { Component } from 'react'
 
+import { withRouter } from 'react-router-dom';
+
+import { connect } from 'react-redux';
 import './styles.scss'
 
-export default class Home extends Component {
-  renderProduct = (times) => {
-    let allProducts = [];
+import { getProductsByCategory } from '../../apollo/queries';
+import { Link } from 'react-router-dom';
 
-    for (let i = 0; i < times; i++) {
-      allProducts = [
-        ...allProducts,
-        <figure key={i}>
-          <img src="https://play-lh.googleusercontent.com/IeNJWoKYx1waOhfWF6TiuSiWBLfqLb18lmZYXSgsH1fvb8v1IYiZr5aYWe0Gxu-pVZX3=s180-rw" />
-          <figcaption className="pd-v-1">Name</figcaption>
-          <strong className="fw-9">$ Price!</strong>
-        </figure>
-      ];
+export class Home extends Component {
+
+  constructor() {
+    super()
+    this.state = {
+      products: []
     }
-
-    return allProducts;
   }
+
+  renderProducts = () => {
+    return this.state.products.map(e=> {
+      const price = e.prices.find(e => e.currency.symbol === this.props.shop.selectedCurrency)
+      const id = e.id
+      return <figure key={e.name}>
+        <Link to={`/product/${id}`} className="pdpc-b-10 bgs-ccn block wpc-10" style={{backgroundImage: `url(${e.gallery[0]})`}} />
+        <figcaption className="pd-v-1">{e.name}</figcaption>
+        <strong className="fw-9">{price.currency.symbol} {price.amount}</strong>
+      </figure>
+    })
+  }
+
+  fetchProductsByCategory = (e) => {
+    getProductsByCategory(e)
+      .then(({ data }) => this.setState({ ...this.state, products: data.category.products }))
+  }
+
+  componentDidUpdate = (prevProps) => {
+    if (prevProps.shop.selectedCategory === this.props.shop.selectedCategory) return
+    this.fetchProductsByCategory(this.props.shop.selectedCategory)
+  }
+
+  componentDidMount = () => this.fetchProductsByCategory(this.props.shop.selectedCategory)
+
+
 
   render() {
-    return (
-      <>
-        <h1 className="pd-t-4 w-max">Category Name</h1>
-        <section className="grid gt-col-3 gap-c-6 gap-r-10 mg-v-10">
-          {this.renderProduct(8)}
-        </section>
-      </>
-    )
+    const {selectedCategory} = this.props.shop
+    const formatedSelectedCategory = `${selectedCategory[0].toUpperCase()}${selectedCategory.slice(1)}`
+
+    return <>
+      <h1 className="pd-t-4 w-max">{formatedSelectedCategory}</h1>
+      <section className="grid gt-col-3 gap-c-6 gap-r-10 mg-v-10">
+        {this.renderProducts()}
+      </section>
+    </>
   }
 }
+
+const mapStateToProps = (state) => ({...state})
+const mapDispatchToProps = {}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home)
