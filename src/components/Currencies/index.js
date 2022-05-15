@@ -40,6 +40,11 @@ export class Currencies extends Component {
     );
   }
 
+  renderCartNumber = () => {
+    const cartLength = this.props.shop.cart.length
+    return cartLength > 0 && <div className="circle dem-3 round ff-2">{cartLength}</div>
+  }
+
   render() {
     return (
       <div className="wpc-5 pd-b-3 flex jsc-fe">
@@ -58,9 +63,7 @@ export class Currencies extends Component {
             <div className="svg wem-3"><img src={cart2} /></div>
             <div className="svg wem-3"><img src={cart2} /></div>
             <div className="svg">
-              <div className="circle dem-3 round ff-2">
-                3
-              </div>
+              {this.renderCartNumber()}
             </div>
           </li>
           <div className="dropdown wpc-10 pd-t-4 pos-abs c-p"
