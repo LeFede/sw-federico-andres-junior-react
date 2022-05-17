@@ -48,7 +48,7 @@ export class Home extends Component {
     const formatedSelectedCategory = `${selectedCategory[0].toUpperCase()}${selectedCategory.slice(1)}`
 
     return <>
-      <h1 className="pd-t-4 w-max">{formatedSelectedCategory}</h1>
+      <h1 className="w-max">{formatedSelectedCategory}</h1>
       <section className="grid gt-col-3 gap-c-6 gap-r-10 mg-v-10">
         {this.renderProducts()}
       </section>

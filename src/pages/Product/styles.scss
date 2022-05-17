@@ -1,0 +1,90 @@
+@use '../../scss/vars' as *;
+.fieldset { display: flex;}
+
+.attributes {
+  width: 100%; display: flex; /* justify-content: space-between; */ gap: 5px;
+}
+
+.attribute {
+  /* height: 100%; */ border: 1px solid black; /* width: 100%; */ text-align: center; flex: 0 1 40px;
+  input[type="radio"] {
+    appearance: none;
+    margin: 0;
+    display: none;
+    &:checked ~ p {
+      color: white;
+      background-color: black;
+    }
+  }
+
+  &.color input[type="radio"]:checked {
+      border: 2px solid $color-1;
+  }
+  
+}
+
+.price {
+
+}
+
+.Product {
+  display: flex;
+  gap: 2em;
+  .left {
+    flex: .3;
+    display: flex; 
+    gap: .5em;
+  }
+  .center {
+    flex: 1;
+  }
+  .right {
+    flex: 1;
+  }
+}
+
+
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+
+button {
+          /*Reset's every elements apperance*/
+        background: none repeat scroll 0 0 transparent;
+        border: medium none;
+        border-spacing: 0;
+        color: #26589F;
+        font-family: 'PT Sans Narrow',sans-serif;
+        font-weight: normal;
+        list-style: none outside none;
+        margin: 0;
+        padding: 0;
+        text-align: left;
+        text-decoration: none;
+        text-indent: 0;
+}
+
+.add-to-cart {
+  width: 100%;
+  background-color: $color-1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-transform: uppercase;
+  padding: 0.5em;
+}
+
+.remove-from-cart {
+  width: 100%;
+  background-color: $color-3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-transform: uppercase;
+  padding: 0.5em;
+  margin-top: 2em;
+}

@@ -7,6 +7,8 @@ import arrow from '../../assets/up-arrow.svg';
 
 import { getCurrencies } from '../../apollo/queries';
 import { changeCurrency } from '../../features/shop';
+import BagProduct from '../BagProduct';
+import Bag from '../Bag';
 
 export class Currencies extends Component {
 
@@ -74,28 +76,11 @@ export class Currencies extends Component {
               {this.renderCurrencies()}
             </menu>
           </div>
-          <div className="cart-list-outer pd-t-4 pos-abs r-0 c-p">
+          <Bag />
+          {/* <div className="cart-list-outer pd-t-4 pos-abs r-0 c-p">
             <div className="cart-list pos-abs shaded r-0 bg-5 pd-2 whsp-pre c-n">
-              <p className="pd-t-1 fw-9 mg-b-3">My Bag, <span className="fw-3">3 items</span></p>
-              <div className="cart-product hem-20 flex fxfw-cw of-h">
-                <div className="left section flex column">
-                  <p>Name</p>
-                  <strong>$ Price</strong>
-                  <p>Size:</p>
-                  <p>S M</p>
-                  <p>Color:</p>
-                  <p>c1 c2 c3</p>
-                </div>
-                <div className="center section flex column">
-                  <p>+</p>
-                  <p>amount</p>
-                  <p>-</p>
-                </div>
-                <figure className="right section flex column">
-                  <img src="https://cdn.vox-cdn.com/thumbor/iKqbD98GVm9t-VgiKdSjA2oHomE=/0x0:2439x1625/920x613/filters:focal(1025x618:1415x1008):format(webp)/cdn.vox-cdn.com/uploads/chorus_image/image/69123675/5.0.png" />
-                </figure>
-              </div>
-
+              <p className="pd-t-1 fw-9 mg-b-3">My Bag, {this.renderCartItemsNumber()}</p>
+              <BagProduct />
               <div className="flex jsc-sb pd-v-2">
                 <p className="fw-9">Total</p>
                 <p className="fw-9">$200</p>
@@ -103,7 +88,7 @@ export class Currencies extends Component {
               <button>VIEW BAG</button>
               <button>CHeckout</button>
             </div>
-          </div> 
+          </div>  */}
         </ul>
       </div>
     )

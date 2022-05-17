@@ -1,8 +1,9 @@
 import { createSlice, current } from "@reduxjs/toolkit";
+import { getFromLocal, saveToLocal } from "./localStorage";
 
 const initialState = {
   selectedCategory: 'all',
-  selectedCurrency: '$',
+  selectedCurrency: getFromLocal('currency') ?? '$',
   preselectedProduct: {},
   cart: [
 
@@ -25,11 +26,8 @@ export const shopSlice = createSlice({
         ]
       }
 
-      console.log(newState.cart)
+      //console.log(newState.cart)
       return newState
-
-
-
     },
     removeFromCart: (_state, {payload}) => {
       // console.log('Removing...')
@@ -67,12 +65,17 @@ export const shopSlice = createSlice({
 
     },
     changeCategory: (state, {payload}) => ({...state, selectedCategory: payload}),
-    changeCurrency: (state, {payload}) => ({...state, selectedCurrency: payload}),
+    changeCurrency: (state, {payload}) => {
+      saveToLocal('currency', payload)
+      return {...state, selectedCurrency: payload}
+    },
     changePreselect: (_state, {payload}) => {
       //console.table(payload)
       const {productId, attribute, attributeValue} = payload
       const state = current(_state)
       //console.log(state)
+
+      
       const newState = {
         ...state,
         preselectedProduct: {

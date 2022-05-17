@@ -87,3 +87,24 @@ export const getProductsByCategory = async (title = 'all') => {
   const res = await client.query({ query, variables });
   return res;
 };
+
+export const getPriceById = async ( id ) => {
+  const query = gql`
+    query ($id: String!) {
+      product(id: $id) {
+        name
+        prices {
+          currency {
+            label
+            symbol
+          }
+          amount
+        }
+      }
+    }
+  `
+
+  const variables = { id };
+  const res = await client.query({ query, variables });
+  return res;
+}

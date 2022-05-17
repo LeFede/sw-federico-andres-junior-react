@@ -5,26 +5,28 @@ import { getProduct } from '../../apollo/queries';
 
 import { changePreselect, addToCart, removeFromCart } from '../../features/shop';
 
+import './styles.scss'
 
 export class Product extends Component {
   constructor() {
     super()
     this.state = {
       product: [],
-      // isChecked: ,
+      selectedIndex: 0,
     }
   }
 
   fetchProduct = (e) => {
     getProduct(e)
       .then(({data}) => {
-        
+
         data.product.attributes.map(e=> {
 
           const newSelect = {
             productId: this.props.match.params.id,
             attribute: e.name,
             attributeValue: e.items[0].value,
+            prices: data.product.prices,
           }
 
           this.props.changePreselect(newSelect)
@@ -40,18 +42,24 @@ export class Product extends Component {
     // console.log(this.props.shop.cart)
   }
 
+  handleClickGallery = (e) => {
+    
+    const index = e.target.attributes.index.value
+    this.setState({...this.state, selectedIndex: index})
+  }
+
   renderGallery = (gallery) => {
-    return gallery.map(e => <figure key={e}>
-      <img src={e} />
+    return gallery.map((e, index) => <figure key={e} className="c-p" onClick={this.handleClickGallery}>
+      <img src={e} index={index}/>
     </figure>)
   }
 
   renderAttributes = (attributes) => {
-    return attributes.map(({name, items}) => <fieldset key={name}>
-      <legend>{name}</legend>
-      {/* <div onChange={() => console.log('changed')}> */}
+    return attributes.map(({name, items}) => <fieldset className="ff-2 mg-t-3 tt-uc fieldset gap-1" key={name}>
+      <legend className="fw-9 pd-v-1">{name}:</legend>
+      <div className="attributes">
         {this.renderAttributeItems(name, items)}
-      {/* </div> */}
+      </div>
     </fieldset>)
   }
 
@@ -72,11 +80,25 @@ export class Product extends Component {
 
   renderAttributeItems = (name, items) => {
     return items.map(({ value, id, displayValue }, index) => {
-
-      return <label key={id}>
-        <input onChange={this.handleChangeAttribute} name={name} type="radio" value={displayValue} id={value} defaultChecked={index===0} />
-        {value}
-      </label>
+      if (name !== 'Color') {
+        return <label className="ff-2 attribute" key={id}>
+          <input onChange={this.handleChangeAttribute} name={name} type="radio" value={displayValue} id={value} defaultChecked={index===0} />
+          <p className="pd-1">{value}</p> 
+        </label>
+      } else {
+        return <label className="ff-2 attribute color" key={id} style={{ backgroundColor: value
+}}>
+          <input 
+            // className="color"
+            style={{backgroundColor: value, width: '100%', paddingBottom: '100%', display: 'block'}}
+            onChange={this.handleChangeAttribute} 
+            name={name} 
+            type="radio" 
+            value={displayValue} 
+            id={value} 
+            defaultChecked={index === 0} />
+        </label>
+      }
     })
   }
 
@@ -93,18 +115,28 @@ export class Product extends Component {
     const attributes = this.state.product?.attributes ?? []
     const price = this.state.product.prices?.find(e => e.currency.symbol === this.props.shop.selectedCurrency) ?? []
     
-    return <>
-      <h1 className="pd-t-4 w-max">{this.state.product.name}</h1>
-      <h2>{price.currency?.symbol}{price?.amount} ({price.currency?.label})</h2>
-      <div dangerouslySetInnerHTML={{ __html: this.state?.product?.description }}></div>
-      <p>{this.state?.product?.inStock ? 'In Stock' : 'Out Of Stock'}</p>
-      <div>
-        <button onClick={this.handleAddToCart}>+</button>
-        <button onClick={this.handleRemoveFromCart}>-</button>
+    return <div className="Product">
+      <div className="column left">
+        {this.renderGallery(gallery)}
       </div>
-      {this.renderAttributes(attributes)}
-      {this.renderGallery(gallery)}
-    </>
+      <div className="column center">
+        <img src={gallery[this.state.selectedIndex]} />
+
+      </div>
+      <div className="column right">
+        <h1 className="w-max">{this.state.product.name}</h1>
+        {/* <p>{this.state?.product?.inStock ? 'In Stock' : 'Out Of Stock'}</p> */}
+        {this.renderAttributes(attributes)}
+        <p className="ff-2 tt-uc fw-9 mg-t-3">Price:</p>
+        <p className="price fw-9 fs-1 pd-v-2">{price.currency?.symbol}{price?.amount} ({price.currency?.label})</p>
+        <div className="mg-t-3">
+          <button className="add-to-cart" onClick={this.handleAddToCart}>Add to cart</button>
+          <button className="remove-from-cart" onClick={this.handleRemoveFromCart}>Remove from cart</button>
+        </div>
+        <div className="mg-t-3" dangerouslySetInnerHTML={{ __html: this.state?.product?.description }}></div>
+      </div>
+   
+    </div>
   }
 }
 

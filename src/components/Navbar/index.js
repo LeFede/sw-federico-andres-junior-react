@@ -22,7 +22,7 @@ export default class Navbar extends Component {
 
   render() {
     return (
-      <nav className="flex pd-t-3 jsc-sb ali-c zi-1 zi-4 pdpc-h-1">
+      <nav className="flex mg-b-10 pd-t-3 jsc-sb ali-c zi-1 zi-4 pdpc-h-1">
         <Categories />
         <Logo size={4} />
         <Currencies />
