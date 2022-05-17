@@ -19,7 +19,8 @@ export default class App extends Component {
           <Switch>
             <Route exact path='/' component={Home} />
             <Route path='/product/:id' component={Product} />
-            <Route path='/cart' component={Home} />
+            {/* <Route path='/cart' component={Home} /> */}
+            <Route path='*'><h1>Error 404:</h1> we didn't find the specified page :(</Route>
           </Switch>
         </main>
       </div>

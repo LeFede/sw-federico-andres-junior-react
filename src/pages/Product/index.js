@@ -114,7 +114,7 @@ export class Product extends Component {
     const gallery = this.state.product?.gallery ?? []
     const attributes = this.state.product?.attributes ?? []
     const price = this.state.product.prices?.find(e => e.currency.symbol === this.props.shop.selectedCurrency) ?? []
-    
+    if (this.state.product.length === 0) return <h1>Didn't find item</h1>
     return <div className="Product">
       <div className="column left">
         {this.renderGallery(gallery)}
